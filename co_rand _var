@@ -1,0 +1,24 @@
+# This code generates and plots the cumulative sum paths of two correlated 
+#random variables to simulate correlated random walks.
+import numpy as np
+import matplotlib.pyplot as plt
+
+rho = -0.7  # vary rho between [-1,1] to visualize different paths
+Ndraws = 1000
+mu = np.array([0,0]) # mean vector
+cov = np.array([[1, rho] , [rho , 1]]) # covariance matrix
+
+W = np.random.multivariate_normal(mu, cov, size=Ndraws)
+# generates 1000 pairs of random numbers that follow a multivariate normal
+# distribution defined by your mean (mu) and covariance matrix (cov)
+
+plt.plot(W.cumsum(axis=0));
+plt.title('Correlated Random Variables')
+plt.show()
+print(np.corrcoef(W.T))
+
+variable_1 = W[:, 0].cumsum(axis=0)
+variable_2 = W[:, 1].cumsum(axis=0)
+if Ndraws < 20:
+    print(f"varialble 1:{variable_1}")
+    print(f"varialble 2:{variable_2}")
